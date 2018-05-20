@@ -14,6 +14,7 @@ import (
 func main() {
 
 	e := echo.New()
+	e.Debug = true
 	g := e.Group("/users")
 	g.Use(middleware.CORS())
 
