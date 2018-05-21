@@ -6,8 +6,7 @@ import (
 //	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"github.com/mjibson/goon"
-	"log"
-
+	log "gaeapp/gae-golang/api/logger"
 )
 
 type GaeDatastoreInstance struct {
@@ -32,8 +31,7 @@ func (gdi *GaeDatastoreInstance) GetAll(entity, filter, key string, entitydata i
 }
 
 func (gdi *GaeDatastoreInstance) Put(entitydata interface{}) error {
-	log.Print("---2--------")
-	log.Print(entitydata)
+	log.Println(entitydata)
 	_, err := gdi.gooninstance.Put(entitydata)
 	return err
 }

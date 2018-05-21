@@ -3,10 +3,9 @@ package dao
 import (
 	"net/http"
 	"time"
-	"log"
 	"gaeapp/gae-golang/api/client"
 	"gaeapp/gae-golang/api/entity"
-
+	log "gaeapp/gae-golang/api/logger"
 )
 
 type UserDAO struct {
@@ -27,7 +26,8 @@ func UserDAONew(r *http.Request) *UserDAO {
 }
 
 func (dao *UserDAO) GetAll(name string) error{
-	if _, err := dao.datastore.GetAll(entity.GAEUSERS_ENTITYNAME, "Name =", name, dao.Users); err != nil {
+	log.Println(name)
+	if _, err := dao.datastore.GetAll(entity.GAEUSERS_ENTITYNAME, "name = ", name, dao.Users); err != nil {
 		return err
 	}
 	return nil
@@ -42,10 +42,6 @@ func (dao *UserDAO) Get(id int64) error{
 }
 
 func (dao *UserDAO) Create() error{
-	log.Print("###########")	
-	log.Print(dao.User)
-	log.Print("######2#####")	
-
 	if err := dao.datastore.Put(dao.User); err != nil {
 		return err
 	}
@@ -59,5 +55,4 @@ func (dao *UserDAO) SetData(name, email string, newflag bool) {
 		dao.User.CreateDate = time.Now()
 		dao.User.UpdateDate = time.Now()
 	}
-	log.Print(dao.User)
 }
