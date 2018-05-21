@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 )
-const GAEUSERS_ENTITYNAME = "gae-users"
+const GAEUSERS_ENTITYNAME = "GaeUsers"
 
 type GaeUsers struct {
 	Id       int64 `datastore:"-" goon:"id" json:"id,omitempty"`
