@@ -42,3 +42,14 @@ func (us Users) GetUser(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, userdao.User)
 }
+
+func (us Users) DeleteUser(c echo.Context) error {
+	userdao := dao.UserDAONew(c.Request())
+	idint, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err := userdao.Delete(idint); err != nil {
+		log.Println(err)
+		return err
+	}
+	return c.JSON(http.StatusOK, userdao.User)
+}
+

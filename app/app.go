@@ -21,6 +21,7 @@ func main() {
 	g.POST("", handler.Users{}.CreateUser)
 	g.GET("", handler.Users{}.GetUsers)
 	g.GET("/:id", handler.Users{}.GetUser)
+	g.DELETE("/:id", handler.Users{}.DeleteUser)
 	
 	http.Handle("/", e)
 	appengine.Main()

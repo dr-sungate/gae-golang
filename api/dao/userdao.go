@@ -48,6 +48,15 @@ func (dao *UserDAO) Create() error{
 	return nil
 }
 
+func (dao *UserDAO) Delete(id int64) error{
+	dao.User.Id = id
+	key := dao.datastore.GetKey(dao.User)
+	if err := dao.datastore.Delete(key); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (dao *UserDAO) SetData(name, email string, newflag bool) {
 	dao.User.Name = name
 	dao.User.Email = email

@@ -35,3 +35,11 @@ func (gdi *GaeDatastoreInstance) Put(entitydata interface{}) error {
 	_, err := gdi.gooninstance.Put(entitydata)
 	return err
 }
+
+func (gdi *GaeDatastoreInstance) Delete(key *datastore.Key) error {
+	return gdi.gooninstance.Delete(key)
+}
+
+func (gdi *GaeDatastoreInstance) GetKey(key interface{}) *datastore.Key {
+	return gdi.gooninstance.Key(key)
+}
