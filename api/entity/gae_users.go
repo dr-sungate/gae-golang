@@ -6,9 +6,9 @@ import (
 const GAEUSERS_ENTITYNAME = "gae-users"
 
 type GaeUsers struct {
-	Id       int64 `datastore:"-" goon:"id"`
-	Name  string  `datastore:"name"`
-	Email string    `datastore:"email"`
-	CreateDate time.Time `datastore:"create_date,noindex"`
-	UpdateDate time.Time `datastore:"update_date,noindex"`
+	Id       int64 `datastore:"-" goon:"id" json:"id,omitempty"`
+	Name  string  `datastore:"name"  json:"name,omitempty"`
+	Email string    `datastore:"email" json:"email,omitempty"`
+	CreateDate time.Time `datastore:"create_date,noindex" json:"creatDate,omitempty"`
+	UpdateDate time.Time `datastore:"update_date,noindex" json:"updateDate,omitempty"`
 }
