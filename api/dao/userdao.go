@@ -26,7 +26,7 @@ func UserDAONew(r *http.Request) *UserDAO {
 }
 
 func (dao *UserDAO) GetAll(name string) error{
-	log.Println(name)
+	log.Info(name)
 	if _, err := dao.datastore.GetAll(entity.GAEUSERS_ENTITYNAME, "name = ", name, dao.Users); err != nil {
 		return err
 	}
@@ -34,6 +34,7 @@ func (dao *UserDAO) GetAll(name string) error{
 }
 
 func (dao *UserDAO) Get(id int64) error{
+	log.Info(id)
 	dao.User.Id = id
 	if err := dao.datastore.GetOne(dao.User); err != nil {
 		return err

@@ -18,7 +18,7 @@ func (us Users) CreateUser(c echo.Context) error {
 	userdao := dao.UserDAONew(c.Request())
 	userdao.SetData(c.FormValue("name"), c.FormValue("email"), true)
 	if err := userdao.Create(); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 	return c.JSON(http.StatusCreated, userdao.User)
@@ -27,7 +27,7 @@ func (us Users) CreateUser(c echo.Context) error {
 func (us Users) GetUsers(c echo.Context) error {
 	userdao := dao.UserDAONew(c.Request())
 	if err := userdao.GetAll(c.QueryParam("name")); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, userdao.Users)
@@ -37,7 +37,7 @@ func (us Users) GetUser(c echo.Context) error {
 	userdao := dao.UserDAONew(c.Request())
 	idint, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err := userdao.Get(idint); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, userdao.User)
@@ -47,7 +47,7 @@ func (us Users) DeleteUser(c echo.Context) error {
 	userdao := dao.UserDAONew(c.Request())
 	idint, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err := userdao.Delete(idint); err != nil {
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 	return c.JSON(http.StatusOK, userdao.User)
