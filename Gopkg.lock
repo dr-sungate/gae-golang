@@ -47,6 +47,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/mjibson/goon"
+  packages = ["."]
+  revision = "0c01b4bc4f4970fa6f91409bf7f134a10809219c"
+
+[[projects]]
+  branch = "master"
   name = "github.com/valyala/bytebufferpool"
   packages = ["."]
   revision = "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
@@ -82,13 +88,17 @@
   name = "google.golang.org/appengine"
   packages = [
     ".",
+    "datastore",
     "internal",
     "internal/app_identity",
     "internal/base",
     "internal/datastore",
     "internal/log",
+    "internal/memcache",
     "internal/modules",
-    "internal/remote_api"
+    "internal/remote_api",
+    "log",
+    "memcache"
   ]
   revision = "150dc57a1b433e64154302bdc40b6bb8aefa313a"
   version = "v1.0.0"
@@ -96,6 +106,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "879a488c6e6aeabff0d9f23cb5ebc73ce80feb417f9de1780986afc5fd86af67"
+  inputs-digest = "f9f2386cf1e6c151a615ce06dd15667675b7fbb14d0f606d9a908356efd86b51"
   solver-name = "gps-cdcl"
   solver-version = 1

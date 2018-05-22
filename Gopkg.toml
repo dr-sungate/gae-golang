@@ -7,6 +7,11 @@
   name = "github.com/labstack/echo"
   version = "3.3.5"
 
+
 [[constraint]]
   name = "google.golang.org/appengine"
   version = "1.0.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/mjibson/goon"
