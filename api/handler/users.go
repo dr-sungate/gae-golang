@@ -25,8 +25,9 @@ func (us Users) CreateUser(c echo.Context) error {
 }
 
 func (us Users) GetUsers(c echo.Context) error {
+	log.Warn(c.QueryParams())
 	userdao := dao.UserDAONew(c.Request())
-	if err := userdao.GetAll(c.QueryParam("name")); err != nil {
+	if err := userdao.GetAll(c.QueryParams()); err != nil {
 		log.Error(err)
 		return err
 	}

@@ -1,8 +1,10 @@
 package dao
 
 import (
+	"net/url"
 	"net/http"
 	"time"
+	"strconv"
 	"gaeapp/gae-golang/api/client"
 	"gaeapp/gae-golang/api/entity"
 	log "gaeapp/gae-golang/api/logger"
@@ -11,7 +13,7 @@ import (
 type UserDAO struct {
 	User *entity.GaeUsers
 	Users *[]entity.GaeUsers
-	datastore *client.GaeDatastoreInstance
+	BaseDAO
 }
 
 // インスタンス作成用のメソッド
@@ -20,30 +22,33 @@ func UserDAONew(r *http.Request) *UserDAO {
 	I := &UserDAO{
 		User: &entity.GaeUsers{},
 		Users: &[]entity.GaeUsers{},
-		datastore: client.NewGaeDatastore(r),
+		BaseDAO: BaseDAO{datastore: client.NewGaeDatastore(r)},
 	}
 	return I
 }
 
-func (dao *UserDAO) GetAll(name string) error{
-	log.Info(name)
-	if _, err := dao.datastore.GetAll(entity.GAEUSERS_ENTITYNAME, "name = ", name, dao.Users); err != nil {
-		return err
-	}
-	return nil
+func (dao *UserDAO) GetAll(query url.Values) error{
+	log.Info(query)
+	limit, _ := strconv.Atoi(query.Get(QUERY_LIMIT))
+	query.Del(QUERY_LIMIT)
+	offset, _ := strconv.Atoi(query.Get(QUERY_OFFSET))
+	query.Del(QUERY_OFFSET)
+	order := query.Get(QUERY_ORDER)
+	query.Del(QUERY_ORDER)
+	return dao.BaseDAO.GetAll(entity.GAEUSERS_ENTITYNAME, query, limit, offset, order, entity.GaeUsers{}, dao.Users)
 }
 
 func (dao *UserDAO) Get(id int64) error{
 	log.Info(id)
 	dao.User.Id = id
-	if err := dao.datastore.GetOne(dao.User); err != nil {
+	if err := dao.BaseDAO.Get(dao.User); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (dao *UserDAO) Create() error{
-	if err := dao.datastore.Put(dao.User); err != nil {
+	if err := dao.BaseDAO.Create(dao.User); err != nil {
 		return err
 	}
 	return nil
@@ -51,8 +56,7 @@ func (dao *UserDAO) Create() error{
 
 func (dao *UserDAO) Delete(id int64) error{
 	dao.User.Id = id
-	key := dao.datastore.GetKey(dao.User)
-	if err := dao.datastore.Delete(key); err != nil {
+	if err := dao.BaseDAO.Delete(dao.User); err != nil {
 		return err
 	}
 	return nil
@@ -66,3 +70,4 @@ func (dao *UserDAO) SetData(name, email string, newflag bool) {
 		dao.User.UpdateDate = time.Now()
 	}
 }
+

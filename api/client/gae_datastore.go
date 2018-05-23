@@ -27,9 +27,19 @@ func (gdi *GaeDatastoreInstance) GetOne(entitydata interface{}) error {
 	return gdi.gooninstance.Get(entitydata)
 }
 
-func (gdi *GaeDatastoreInstance) GetAll(entity, filter, key string, entitydata interface{}) ([]*datastore.Key, error) {
-	log.Info(fmt.Sprintf("%s / %s / %s", entity, filter, key))
-	q := datastore.NewQuery(entity).Filter(filter, key)
+func (gdi *GaeDatastoreInstance) GetAll(entity string, querymap map[string]string, limit, offset int, order string, entitydata interface{}) ([]*datastore.Key, error) {
+	log.Info(fmt.Sprintf("%s / %s ", entity, querymap))
+	q := datastore.NewQuery(entity)
+	for key, value := range querymap {
+		q = q.Filter(key, value)
+	}
+	if limit != 0 { 
+		q = q.Limit(limit)
+	}
+	q = q.Offset(offset)
+	if order != "" { 
+		q = q.Order(order)
+	}
 	return gdi.gooninstance.GetAll(q, entitydata)
 }
 
